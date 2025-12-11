@@ -53,6 +53,7 @@ const average = (arr) =>
 // Components
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <>
@@ -63,10 +64,17 @@ export default function App() {
       </NavBar>
 
       <Main>
-        <ListBox>
+        <Box>
           <MovieList movies={movies} />
-        </ListBox>
-        <WatchedBox />
+        </Box>
+        <Box>
+          <>
+            <WatchedSummery watched={watched} />
+            <WatchedMoviesList watched={watched} />
+          </>
+        </Box>
+
+        {/* <WatchedBox /> */}
       </Main>
     </>
   );
@@ -111,8 +119,8 @@ function Main({ children }) {
   return <main className="main">{children}</main>;
 }
 
-function ListBox({ children }) {
-  const [isOpen1, setIsOpen1] = useState(true);
+function Box({ children }) {
+  const [isOpen, setIsOpen1] = useState(true);
 
   return (
     <div className="box">
@@ -120,9 +128,9 @@ function ListBox({ children }) {
         className="btn-toggle"
         onClick={() => setIsOpen1((open) => !open)}
       >
-        {isOpen1 ? "–" : "+"}
+        {isOpen ? "–" : "+"}
       </button>
-      {isOpen1 && children}
+      {isOpen && children}
     </div>
   );
 }
@@ -152,6 +160,7 @@ function Movie({ movie }) {
   );
 }
 
+/*
 function WatchedBox() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isOpen2, setIsOpen2] = useState(true);
@@ -173,6 +182,7 @@ function WatchedBox() {
     </div>
   );
 }
+*/
 
 function WatchedSummery({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
